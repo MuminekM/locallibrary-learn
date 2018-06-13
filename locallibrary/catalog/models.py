@@ -64,6 +64,9 @@ class Book(models.Model):
         on_delete=models.SET_NULL,
         null=True
     )
+    def display_genre(self):
+        return ', '.join([genre.name for genre in self.genre.all()[:3]])
+    display_genre.short_description = 'Genre'
 
     def __str__(self):
         return self.title
