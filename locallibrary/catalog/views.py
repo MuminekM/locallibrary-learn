@@ -19,6 +19,10 @@ def index(request):
     num_fantasy_books = Book.objects.filter(genre__name__iexact='fantasy').count()
     num_genres = Genre.objects.all().count()
 
+    # Number of visits to this view, as counted in the session variable.
+    num_visits = request.session.get('num_visits', 0)
+    request.session['num_visits'] = num_visits+1
+
     # Render the HTML template index.html with the data in the context variable
     return render(
         request,
@@ -29,7 +33,8 @@ def index(request):
             'num_instances_available': num_instances_available,
             'num_authors': num_authors,
             'num_fantasy_books': num_fantasy_books,
-            'num_genres': num_genres
+            'num_genres': num_genres,
+            'num_visits':num_visits
         },
     )
 
